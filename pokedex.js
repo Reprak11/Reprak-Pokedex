@@ -4,23 +4,27 @@ const components = {
 }
 
 //Make the promise with PokeAPi
-async function getPoke(value) {
+function getPoke(value) {
     try {
-        const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${value}`)
-        return response.data
+        return axios.get(`https://pokeapi.co/api/v2/pokemon/${value}`)
     } catch (error) {
         console.error(error);
     }
 }
 
+function myPokeList(page){
+    const pokeList = [];
+    for(let i=1; i<15; i++){
+        pokeList.push(getPoke(i+15*page))
+    }
+    return pokeList
+}
+
 // Get all pokemon in the group
-const getMyPokes = async () =>{
-    const myPokes = []
-    for (let i=1; i<15;i++){
-        //Get 1 Pokemon
-        let poke = await getPoke(i);
-        
-        //Create Pokemon name title
+const getMyPokes = async (page) =>{
+    axios.all(myPokeList(page)).then(myPokes => 
+        myPokes.forEach( poke =>{
+        poke = poke.data
         let name = document.createElement("h2")
         name.textContent=poke.name
         name.className="text-3xl capitalize"
@@ -39,12 +43,11 @@ const getMyPokes = async () =>{
         //Add card to section
         components["myPokeGroup"].appendChild(d)
         }
-        console.log(myPokes)
+        )
+    )
 }
 
 window.onload = (()=>{
-    getMyPokes()
+    getMyPokes(0)
 })
-
-
 
