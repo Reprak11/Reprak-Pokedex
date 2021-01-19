@@ -56,26 +56,25 @@ const printPokes = (value) =>{
     }
 }
 
-
-let allPokes
 let justinBieber = 0
-
-//On windows load add the first page to the DOM
-window.onload = (async ()=>{
-    allPokes = await getMyPokes(0)
-    printPokes(justinBieber)
-})
-
 //Button eventListener
 const changePage = (direction) =>{
     if (direction == "left" && justinBieber > 0){
-        justinBieber++
-        printPokes(justinBieber)
-    } else if (direction == "right" && justinBieber < 15){
         justinBieber--
+        printPokes(justinBieber)
+    } else if (direction == "right" && justinBieber < 9){
+        justinBieber++
         printPokes(justinBieber)
     }
 }
 
-components["myLeftArrow"].addEventListener('click', () =>changePage("left"))
-components["myRightArrow"].addEventListener('click',() => changePage("right"))
+let allPokes
+//On windows load add the first page to the DOM
+window.onload = (async ()=>{
+    allPokes = await getMyPokes(0)
+    printPokes(justinBieber)
+    components["myLeftArrow"].addEventListener('click', () =>changePage("left"))
+    components["myRightArrow"].addEventListener('click',() => changePage("right"))
+})
+
+
