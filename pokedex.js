@@ -2,7 +2,9 @@
 const components = {
     "myPokeGroup": document.getElementById("pokeGroup"),
     "myLeftArrow": document.getElementById("leftArrow"),
-    "myRightArrow": document.getElementById("rightArrow")
+    "myRightArrow": document.getElementById("rightArrow"),
+    "myLeftArrow2": document.getElementById("leftArrow2"),
+    "myRightArrow2": document.getElementById("rightArrow2")
 }
 
 //Make the promise with PokeAPi
@@ -36,20 +38,27 @@ const printPokes = (value) =>{
         poke = allPokes[i].data
         
         //Create Pokemon Title
-        let name = document.createElement("h2")
+        const name = document.createElement("h2")
         name.textContent=poke.name
         name.className="text-3xl capitalize"
     
         //Create Pokemon image
-        let image = document.createElement("img")
+        const image = document.createElement("img")
         image.src=poke["sprites"]["front_default"]
         image.className="w-32 h-32 object-cover"
 
+        //Create Info Button
+        const button = document.createElement("button")
+        button.textContent="Info"
+        button.className="rounded-md text-2xl font-semibold w-20 bg-red-600 text-yellow-300 focus:outline-none"
+        button.addEventListener("click", () => pokeModal(i))
+
         //Create Pokemon card
-        let d=document.createElement("div")
+        const d=document.createElement("div")
         d.appendChild(name)
         d.appendChild(image)
-        d.className="w-72 h-48 border flex flex-col items-center justify-center shadow-lg mt-3"
+        d.appendChild(button)
+        d.className="w-72 h-56 ml-1/2 border flex flex-col items-center justify-center shadow-lg mt-3"
 
         //Add card to section
         components["myPokeGroup"].appendChild(d)
@@ -75,6 +84,40 @@ window.onload = (async ()=>{
     printPokes(justinBieber)
     components["myLeftArrow"].addEventListener('click', () =>changePage("left"))
     components["myRightArrow"].addEventListener('click',() => changePage("right"))
+    components["myLeftArrow2"].addEventListener('click', () =>changePage("left"))
+    components["myRightArrow2"].addEventListener('click',() => changePage("right"))
 })
 
+const pokeModal = (poke) => {
+    const exit = document.createElement("button")
+    exit.id ="exitButton"
+    exit.addEventListener("click", closeModal)
+    exit.textContent="X"
+    
+    const name = document.createElement("h2")
+    name.textContent=allPokes[poke].data.name
+    name.classList="capitalize"
+    
+    const image = document.createElement("img")
+    image.src=allPokes[poke]["data"]["sprites"]["front_default"]
 
+    const d=document.createElement("div")
+    d.appendChild(exit)
+    d.appendChild(name)
+    d.appendChild(image)
+    d.className="bg-white w-72 h-56 border flex flex-col items-center justify-center shadow-lg"
+
+    const d2 = document.createElement("div")
+    d2.id="background"
+    d2.appendChild(d)
+    d2.className = "fixed bg-opacity-50 bg-gray-800 top-0 w-full h-full flex items-center justify-center "
+    d2.addEventListener("click",closeModal)
+    //Add card to section
+    document.body.appendChild(d2)
+}
+
+const closeModal = (e) => {
+    if (e.target.id == "exitButton" || e.target.id == "background"){
+        document.body.removeChild(document.body.lastChild)
+    }
+}
