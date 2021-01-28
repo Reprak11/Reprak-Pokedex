@@ -1,6 +1,6 @@
 import {Components} from './components.js';
 import {getMyPokes} from './getAPI.js'
-import {pokeModal} from './modal.js'
+import {pokeModal} from './modal/modal.js'
 
 //Components of the DOM
 const components = Components()
