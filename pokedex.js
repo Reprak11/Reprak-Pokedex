@@ -21,8 +21,8 @@ const addCard = (i, pokeGroup) =>{
 
     //Create Info Button
     const button = document.createElement("button")
-    button.textContent="Info"
-    button.className="rounded-md text-2xl font-semibold w-20 bg-red-600 text-yellow-300 focus:outline-none"
+    button.textContent="INFO"
+    button.className="text-2xl font-semibold w-40 bg-red-500 hover:bg-red-600 text-white rounded focus:outline-none"
     button.addEventListener("click", () => pokeModal(i,pokeGroup))
 
     //Create Pokemon card
@@ -30,7 +30,7 @@ const addCard = (i, pokeGroup) =>{
     d.appendChild(name)
     d.appendChild(image)
     d.appendChild(button)
-    d.className="w-72 h-56 ml-1/2 border flex flex-col items-center justify-center shadow-lg mt-3"
+    d.className="w-72 h-56 lg:h-60 lg:pt-3 ml-1/2 border rounded flex flex-col items-center justify-center shadow-lg mt-3"
 
     //Add card to section
     components["myPokeGroup"].appendChild(d)

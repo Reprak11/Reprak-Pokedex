@@ -12,7 +12,7 @@ export function pokeModal(poke, allPokes){
     d.appendChild(images(poke,allPokes))
     d.appendChild(types(poke,allPokes))
     d.appendChild(abilities(poke,allPokes))
-    d.className="bg-white w-72 h-96 border flex flex-col items-center shadow-2xl rounded-md"
+    d.className="bg-white w-72 lg:w-96 h-96 lg:h-auto lg:pb-8 border flex flex-col items-center shadow-2xl rounded-md"
 
     //Modal Background
     const d2 = document.createElement("div")
