@@ -5,39 +5,44 @@ import {pokeModal} from './modal/modal.js'
 //Components of the DOM
 const components = Components()
 
+//Add a single Pokemon Card
+const addCard = (i, pokeGroup) =>{
+    const poke = pokeGroup[i].data
+
+    //Create Pokemon Title
+    const name = document.createElement("h2")
+    name.textContent=poke.name
+    name.className="text-3xl capitalize"
+
+    //Create Pokemon image
+    const image = document.createElement("img")
+    image.src=poke["sprites"]["versions"]["generation-vi"]["omegaruby-alphasapphire"]["front_default"]
+    image.className="w-32 h-32 object-cover"
+
+    //Create Info Button
+    const button = document.createElement("button")
+    button.textContent="Info"
+    button.className="rounded-md text-2xl font-semibold w-20 bg-red-600 text-yellow-300 focus:outline-none"
+    button.addEventListener("click", () => pokeModal(i,pokeGroup))
+
+    //Create Pokemon card
+    const d=document.createElement("div")
+    d.appendChild(name)
+    d.appendChild(image)
+    d.appendChild(button)
+    d.className="w-72 h-56 ml-1/2 border flex flex-col items-center justify-center shadow-lg mt-3"
+
+    //Add card to section
+    components["myPokeGroup"].appendChild(d)
+}
+
 // Add a page of Pokemon to the DOM
 const printPokes = (value) =>{
     while (components["myPokeGroup"].firstChild) {
         components["myPokeGroup"].removeChild(components["myPokeGroup"].lastChild);
     }
     for(let i=0+15*value;i<15+15*value;i++){
-        const poke = allPokes[i].data
-        
-        //Create Pokemon Title
-        const name = document.createElement("h2")
-        name.textContent=poke.name
-        name.className="text-3xl capitalize"
-    
-        //Create Pokemon image
-        const image = document.createElement("img")
-        image.src=poke["sprites"]["versions"]["generation-vi"]["omegaruby-alphasapphire"]["front_default"]
-        image.className="w-32 h-32 object-cover"
-
-        //Create Info Button
-        const button = document.createElement("button")
-        button.textContent="Info"
-        button.className="rounded-md text-2xl font-semibold w-20 bg-red-600 text-yellow-300 focus:outline-none"
-        button.addEventListener("click", () => pokeModal(i,allPokes))
-
-        //Create Pokemon card
-        const d=document.createElement("div")
-        d.appendChild(name)
-        d.appendChild(image)
-        d.appendChild(button)
-        d.className="w-72 h-56 ml-1/2 border flex flex-col items-center justify-center shadow-lg mt-3"
-
-        //Add card to section
-        components["myPokeGroup"].appendChild(d)
+        addCard(i,allPokes)
     }
 }
 
@@ -62,4 +67,23 @@ window.onload = (async ()=>{
     components["myRightArrow"].addEventListener('click',() => changePage("right"))
     components["myLeftArrow2"].addEventListener('click', () =>changePage("left"))
     components["myRightArrow2"].addEventListener('click',() => changePage("right"))
+    components["mysearchPoke"].addEventListener('input',(e) => inputSearch(allPokes,e.target.value))
 })
+
+const inputSearch = (allPokes, myText) =>{
+    if (myText == ''){
+        components["myTopArrows"].classList.remove("hidden")
+        components["myBottomArrows"].classList.remove("hidden")
+        printPokes(page)
+    } else{
+        components["myTopArrows"].classList.add("hidden")
+        components["myBottomArrows"].classList.add("hidden")
+        while (components["myPokeGroup"].firstChild) {
+            components["myPokeGroup"].removeChild(components["myPokeGroup"].lastChild);
+        }
+        const myLocalList = (allPokes.filter(poke => poke["data"]["name"].startsWith(myText.toLowerCase())))
+        for (let i=0;i<myLocalList.length;i++){
+            addCard(i,myLocalList)
+        }
+    }
+}

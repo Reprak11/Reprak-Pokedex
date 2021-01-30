@@ -20,12 +20,12 @@ export function abilities(poke,allPokes){
     weightTitle.textContent="Weight"
     weightTitle.className="font-bold"
     const weightValue = document.createElement('h2') 
-    weightValue.textContent = `${allPokes[poke]["data"]["weight"]/10} kgs`
+    weightValue.textContent = `${allPokes[poke]["data"]["weight"]/10} kg`
     const heightTitle = document.createElement('h2')
     heightTitle.textContent="Height"
     heightTitle.className="font-bold"
     const heightValue = document.createElement('h2')
-    heightValue.textContent = `${allPokes[poke]["data"]["height"]/10} mts`
+    heightValue.textContent = `${allPokes[poke]["data"]["height"]/10} m`
     const weightHeightDiv = document.createElement('div')
     weightHeightDiv.appendChild(weightTitle)
     weightHeightDiv.appendChild(weightValue)
