@@ -1,7 +1,7 @@
 //Make the promise with PokeAPi
 function getPoke(value) {
     try {
-        return axios.get(`https://pokeapi.co/api/v2/pokemon/${value}`)
+        return axios.get(`https://pokeapi.co/api/v2/pokemon/${value}/`)
     } catch (error) {
         console.error(error);
     }
